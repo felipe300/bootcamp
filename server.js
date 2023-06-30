@@ -1,10 +1,11 @@
 import sequelize from "./src/config/db.config.js"
 import app from "./src/app.js"
+import 'dotenv/config'
 
 //importar asociaciones
 import "./src/models/associations.js"
 
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 const main = async () => {
 	try {
