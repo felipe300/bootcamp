@@ -1,13 +1,21 @@
+import Bootcamp from "../models/bootcamp.model.js"
 import User from "../models/user.model.js"
 
 export const findAll = async (_req, res) => {
 	try {
-		const users = await User.findAll()
+		const users = await User.findAll({
+			include: [{
+				model: Bootcamp,
+				as: 'bootcamps',
+				attributes: { exclude: ['createdAt', 'updatedAt'] },
+				through: { attributes: [] }
+			}]
+		})
 		res.send({ code: 200, data: users })
 	} catch (err) {
 		res.status(500).send({
 			code: 500,
-			message: `💩, Error to get users, ${err.message}`,
+			message: `💩, Error to get users, ${err}`
 		})
 	}
 }
@@ -33,12 +41,12 @@ export const createUser = async (req, res) => {
 
 		res.status(201).send({
 			code: 201,
-			message: `User '${user.firstName} ${user.lastName}' created!`,
+			message: `User '${user.firstName} ${user.lastName}' created!`
 		})
 	} catch (err) {
 		res.status(500).send({
 			code: 500,
-			message: `💩, Error to create user, ${err.message}`,
+			message: `💩, Error to create user, ${err.message}`
 		})
 	}
 }
@@ -46,7 +54,14 @@ export const createUser = async (req, res) => {
 export const findUserById = async (req, res) => {
 	try {
 		let { id } = req.params
-		let found = await User.findByPk(id)
+		let found = await User.findByPk(id, {
+			include: [{
+				model: Bootcamp,
+				as: 'bootcamps',
+				attributes: { exclude: ['createdAt', 'updatedAt'] },
+				through: { attributes: [] }
+			}]
+		})
 
 		if (!found) {
 			return res
@@ -62,7 +77,7 @@ export const findUserById = async (req, res) => {
 	} catch (err) {
 		res.status(500).send({
 			code: 500,
-			message: `💩, Error to to find user by id, ${err.message}`,
+			message: `💩, Error to to find user by id, ${err.message}`
 		})
 	}
 }
@@ -82,21 +97,19 @@ export const updateUserById = async (req, res) => {
 		let newUser = await found.update(
 			{ firstName, lastName, email },
 			{
-				where: {
-					id
-				}
+				where: { id }
 			}
 		)
 
 		res.status(200).send({
 			code: 200,
 			message: `User '${newUser.firstName} ${newUser.lastName}' updated!`,
-			data: newUser 
+			data: newUser
 		})
 	} catch (err) {
 		res.status(500).send({
 			code: 500,
-			message: `💩, Error to update user, ${err.message}`,
+			message: `💩, Error to update user, ${err.message}`
 		})
 	}
 }
@@ -121,7 +134,7 @@ export const deleteUserById = async (req, res) => {
 	} catch (err) {
 		res.status(500).send({
 			code: 500,
-			message: `💩, Error to delete by id, ${err.message}`,
+			message: `💩, Error to delete by id, ${err.message}`
 		})
 	}
 }

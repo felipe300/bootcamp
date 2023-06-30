@@ -11,7 +11,7 @@ const router = express.Router()
 
 router.get("/", findAll)
 router.post("/", createBootcamp)
-router.post("/add", addUser)
+router.post("/adduser", addUser)
 router.get("/:id", findById)
 
 export default router

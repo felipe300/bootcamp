@@ -1,4 +1,5 @@
 import Bootcamp from "../models/bootcamp.model.js"
+import User from "../models/user.model.js"
 
 export const createBootcamp = async (req, res) => {
 	try {
@@ -21,24 +22,58 @@ export const createBootcamp = async (req, res) => {
 
 		res.status(201).send({
 			code: 201,
-			message: `Bootcamp '${bootcamp.title}' created!`,
+			message: `Bootcamp '${bootcamp.title}' created!`
 		})
 	} catch (err) {
 		res.status(500).send({
 			code: 500,
-			message: `💩, Error to create bootcamp, ${err.message}`,
+			message: `💩, Error to create bootcamp, ${err.message}`
 		})
 	}
 }
 
 export const addUser = async (req, res) => {
-	res.send({ message: 'ok add' })
+	try {
+		let { bootcampId, userId } = req.body
+		let foundBootcamp = await Bootcamp.findByPk(userId)
+		let foundUser = await User.findByPk(bootcampId)
+
+		if (!foundBootcamp) {
+			return res
+				.status(404)
+				.send({ code: 404, message: `Bootcamp with id '${bootcampId}' not found!` })
+		}
+
+		if (!foundUser) {
+			return res
+				.status(404)
+				.send({ code: 404, message: `User with id '${userId}' not found!` })
+		}
+
+		let addedUserToBootcamp = await foundBootcamp.addUser(foundUser)
+
+		res.status(200).send({
+			code: 200,
+			data: addedUserToBootcamp
+		})
+	} catch (err) {
+		res.status(500).send({
+			code: 500,
+			message: `💩, Error to find user by id, ${err.message}`,
+		})
+	}
 }
 
 export const findById = async (req, res) => {
 	try {
 		let { id } = req.params
-		let found = await Bootcamp.findByPk(id)
+		let found = await Bootcamp.findByPk(id, {
+			include: {
+				model: User,
+				as: "users",
+				through: { attributes: [] }
+			}
+		})
 
 		if (!found) {
 			return res
@@ -54,19 +89,26 @@ export const findById = async (req, res) => {
 	} catch (err) {
 		res.status(500).send({
 			code: 500,
-			message: `💩, Error to to find user by id, ${err.message}`,
+			message: `💩, Error to to find user by id, ${err.message}`
 		})
 	}
 }
 
-export const findAll = async (_req, res) => {
+export const findAll = async (req, res) => {
 	try {
-		const bootcamps = await Bootcamp.findAll()
+		const bootcamps = await Bootcamp.findAll({
+			include: [{
+				model: User,
+				as: 'user',
+				attributes: { exclude: ['cue'] },
+				through: { attributes: [] }
+			}]
+		})
 		res.send({ code: 200, data: bootcamps })
 	} catch (err) {
 		res.status(500).send({
 			code: 500,
-			message: `💩, Error to get bootcamps, ${err.message}`,
+			message: `💩, Error to get bootcamps, ${err.message}`
 		})
 	}
 }

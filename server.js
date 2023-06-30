@@ -2,7 +2,7 @@ import sequelize from "./src/config/db.config.js"
 import app from "./src/app.js"
 
 //importar asociaciones
-// import "./app/models/asociaciones.js"
+import "./src/models/associations.js"
 
 const PORT = 3000
 
@@ -18,4 +18,5 @@ const main = async () => {
 		console.log(`Something went wrong, Error => ${err}`)
 	}
 }
+
 main()
