@@ -35,8 +35,8 @@ export const createBootcamp = async (req, res) => {
 export const addUser = async (req, res) => {
 	try {
 		let { bootcampId, userId } = req.body
-		let foundBootcamp = await Bootcamp.findByPk(userId)
-		let foundUser = await User.findByPk(bootcampId)
+		let foundBootcamp = await Bootcamp.findByPk(bootcampId)
+		let foundUser = await User.findByPk(userId)
 
 		if (!foundBootcamp) {
 			return res
@@ -99,7 +99,7 @@ export const findAll = async (req, res) => {
 		const bootcamps = await Bootcamp.findAll({
 			include: [{
 				model: User,
-				as: 'user',
+				as: 'users',
 				attributes: { exclude: ['cue'] },
 				through: { attributes: [] }
 			}]
