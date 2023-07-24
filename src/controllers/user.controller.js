@@ -22,12 +22,12 @@ export const findAll = async (_req, res) => {
 
 export const createUser = async (req, res) => {
 	try {
-		let { firstName, lastName, email } = req.body
+		let { firstname, lastname, email } = req.body
 		const [user, created] = await User.findOrCreate({
 			where: { email },
 			defaults: {
-				firstName,
-				lastName,
+				firstname,
+				lastname,
 				email
 			},
 		})
@@ -41,7 +41,7 @@ export const createUser = async (req, res) => {
 
 		res.status(201).send({
 			code: 201,
-			message: `User '${user.firstName} ${user.lastName}' created!`
+			message: `User '${user.firstname} ${user.lastname}' created!`
 		})
 	} catch (err) {
 		res.status(500).send({
@@ -85,7 +85,7 @@ export const findUserById = async (req, res) => {
 export const updateUserById = async (req, res) => {
 	try {
 		let { id } = req.params
-		let { firstName, lastName, email } = req.body
+		let { firstname, lastname } = req.body
 		let found = await User.findByPk(id)
 
 		if (!found) {
@@ -95,15 +95,13 @@ export const updateUserById = async (req, res) => {
 		}
 
 		let newUser = await found.update(
-			{ firstName, lastName, email },
-			{
-				where: { id }
-			}
+			{ firstname, lastname },
+			{ where: { id } }
 		)
 
 		res.status(200).send({
 			code: 200,
-			message: `User '${newUser.firstName} ${newUser.lastName}' updated!`,
+			message: `User '${newUser.firstname} ${newUser.lastname}' updated!`,
 			data: newUser
 		})
 	} catch (err) {
@@ -118,7 +116,7 @@ export const deleteUserById = async (req, res) => {
 	try {
 		let { id } = req.params
 		let found = await User.findByPk(id)
-		let fullname = `${found.firstName} ${found.lastName}`
+		let fullname = `${found.firstname} ${found.lastname}`
 
 		if (!found) {
 			return res

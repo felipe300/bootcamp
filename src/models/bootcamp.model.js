@@ -22,7 +22,7 @@ const Bootcamp = sequelize.define(
 			}
 		},
 		description: {
-			type: DataTypes.STRING(500),
+			type: DataTypes.TEXT,
 			allowNull: false,
 			validate: {
 				notEmpty: true

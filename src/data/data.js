@@ -1,23 +1,23 @@
 // THIS FILE IS ONLY TO COPY PASTE IN THE REQUEST
 const Users = [
 	{
-		"firstName": "Mateo",
-		"lastName": "Díaz",
+		"firstname": "Mateo",
+		"lastname": "Díaz",
 		"email": "mateo.diaz@correo.com"
 	},
 	{
-		"firstName": "Santiago",
-		"lastName": "Mejías",
+		"firstname": "Santiago",
+		"lastname": "Mejías",
 		"email": "santiago.mejias@correo.com"
 	},
 	{
-		"firstName": "Lucas",
-		"lastName": "Rojas",
+		"firstname": "Lucas",
+		"lastname": "Rojas",
 		"email": "lucas.rojas@correo.com"
 	},
 	{
-		"firstName": "Facundo",
-		"lastName": "Fernandez",
+		"firstname": "Facundo",
+		"lastname": "Fernandez",
 		"email": "facundo.fernandez@correo.com"
 	}
 ]

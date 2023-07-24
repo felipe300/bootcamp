@@ -4,14 +4,14 @@ import sequelize from "../config/db.config.js"
 const User = sequelize.define(
 	"users",
 	{
-		firstName: {
+		firstname: {
 			type: DataTypes.STRING(50),
 			allowNull: false,
 			validate: {
 				notEmpty: true
 			}
 		},
-		lastName: {
+		lastname: {
 			type: DataTypes.STRING(50),
 			allowNull: false,
 			validate: {
@@ -26,7 +26,11 @@ const User = sequelize.define(
 				isEmail: true,
 				notEmpty: true
 			}
-		}
+		},
+		password: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
 	},
 	{
 		timestamps: true,

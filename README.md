@@ -6,48 +6,49 @@ Dado el siguiente modelo relacional:
 
 Realizar las siguientes consultas:
 
-* Consultando el Bootcamp por id, incluyendo los usuarios.
+* Listar el usuario con el id 3 ![image1](./public/getuserid3.png)
 ```bash
 # GET
-http://localhost:3000/api/v1/bootcamp/id/1
+http://localhost:3000/api/v1/users/3
 ```
 
-* Listar todos los Bootcamp con sus usuarios.
-```bash
-# GET
-http://localhost:3000/api/v1/bootcamp
-
-```
-
-* Consultar un usuario por id, incluyendo los Bootcamp.
-```bash
-# GET
-http://localhost:3000/api/v1/user/1
-
-```
-
-* Listar los usuarios con sus Bootcamp.
-```bash
-# GET
-http://localhost:3000/api/v1/user
-
-```
-
-* Actualizar el usuario según su id; por ejemplo: actualizar el usuario con id=1 por Pedro Sánchez.
+* Actualizar el usuario según su id; por ejemplo: actualizar el usuario con id=1 por Pedro Sánchez. ![image2](./public/update.png)
 ```bash
 # PUT
 http://localhost:3000/api/v1/users/1
 ```
 ```json
 {
-  "firstName": "Pedro",
-	"lastName": "Sánchez",
+  "firstname": "Pedro",
+	"lastname": "Sánchez",
 	"email": "mateo.diaz@correo.com"
 }
 ```
 
-* Eliminar un usuario por id; por ejemplo: el usuario con id=1.
+* Eliminar un usuario por id; por ejemplo: el usuario con `id=3`. ![image3](./public/delete.png)
 ```bash
 # DELETE
 http://localhost:3000/api/v1/users/1
 ```
+
+* Consultando el bootcamp por id, incluyendo los usuarios registrados ![image4](./public/bootcampbyid.png)
+```bash
+# GET
+http://localhost:3000/api/v1/bootcamps/1
+
+```
+
+* Listar todos los bootcamp con sus usuarios ![image5](./public/getallusers_bootcamp.png)
+```bash
+# GET
+http://localhost:3000/api/v1/bootcamps
+
+```
+
+* Consultar un usuario por id incluyendo los bootcamp ![image6](./public/getuserid3.png)
+```bash
+# GET
+http://localhost:3000/api/v1/users/3
+```
+
+* Gestione adecuadamente el manejo de errores ![image6](./public/notoken.png)
